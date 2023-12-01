@@ -59,23 +59,8 @@ func RunPart2() {
 				}
 				last = string(char)
 			} else {
-				num := ""
-				if i+3 <= len(line) {
-					if found, foundNum := tryFindNumber(line[i : i+3]); found {
-						num = foundNum
-					}
-				}
-				if i+4 <= len(line) {
-					if found, foundNum := tryFindNumber(line[i : i+4]); found {
-						num = foundNum
-					}
-				}
-				if i+5 <= len(line) {
-					if found, foundNum := tryFindNumber(line[i : i+5]); found {
-						num = foundNum
-					}
-				}
-				if num != "" {
+				num, ok := tryFindNumber(line[i:])
+				if ok {
 					if first == "" {
 						first = num
 					}
@@ -96,9 +81,21 @@ func isNum(char byte) bool {
 	return char >= 48 && char <= 57
 }
 
-func tryFindNumber(word string) (bool, string) {
-	if num, ok := numMap[word]; ok {
-		return true, num
+func tryFindNumber(word string) (string, bool) {
+	if len(word) >= 3 {
+		if num, ok := numMap[word[:3]]; ok {
+			return num, true
+		}
 	}
-	return false, ""
+	if len(word) >= 4 {
+		if num, ok := numMap[word[:4]]; ok {
+			return num, true
+		}
+	}
+	if len(word) >= 5 {
+		if num, ok := numMap[word[:5]]; ok {
+			return num, true
+		}
+	}
+	return "", false
 }
