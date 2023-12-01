@@ -9,7 +9,11 @@ import (
 func main() {
 	week := os.Args[1]
 	switch week {
-	case "week_1":
-		week_1.Run()
+	case "week1":
+		if os.Args[2] == "1" {
+			week_1.RunPart1()
+		} else {
+			week_1.RunPart2()
+		}
 	}
 }

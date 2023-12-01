@@ -1,14 +1,104 @@
 package week_1
 
-import "github.com/t-humphrey/advent-of-code-2023/base"
+import (
+	"fmt"
+	"strconv"
 
-func Run() {
-	base.LoadFile("week_1/input.txt")
-	for {
-		line, err := base.ReadLine()
-		if err != nil {
-			break
+	"github.com/t-humphrey/advent-of-code-2023/base"
+)
+
+var numMap = map[string]string{
+	"one":   "1",
+	"two":   "2",
+	"three": "3",
+	"four":  "4",
+	"five":  "5",
+	"six":   "6",
+	"seven": "7",
+	"eight": "8",
+	"nine":  "9",
+}
+
+func RunPart1() {
+	lines := base.LoadFile("week_1/input.txt")
+	runingTotal := 0
+	for _, line := range lines {
+		first := ""
+		last := ""
+
+		for i := 0; i < len(line); i++ {
+			char := line[i]
+			if isNum(char) {
+				if first == "" {
+					first = string(char)
+				}
+				last = string(char)
+			}
 		}
-		println(line)
+		amount, err := strconv.Atoi(first + last)
+		if err != nil {
+			panic(err)
+		}
+		runingTotal += amount
 	}
+	fmt.Println(runingTotal)
+}
+
+func RunPart2() {
+	lines := base.LoadFile("week_1/input.txt")
+	runingTotal := 0
+	for _, line := range lines {
+		first := ""
+		last := ""
+
+		for i := 0; i < len(line); i++ {
+			char := line[i]
+			if isNum(char) {
+				if first == "" {
+					first = string(char)
+				}
+				last = string(char)
+			} else {
+				num := ""
+				if i+3 <= len(line) {
+					if found, foundNum := tryFindNumber(line[i : i+3]); found {
+						num = foundNum
+					}
+				}
+				if i+4 <= len(line) {
+					if found, foundNum := tryFindNumber(line[i : i+4]); found {
+						num = foundNum
+					}
+				}
+				if i+5 <= len(line) {
+					if found, foundNum := tryFindNumber(line[i : i+5]); found {
+						num = foundNum
+					}
+				}
+				if num != "" {
+					if first == "" {
+						first = num
+					}
+					last = num
+				}
+			}
+		}
+		amount, err := strconv.Atoi(first + last)
+		if err != nil {
+			panic(err)
+		}
+		runingTotal += amount
+	}
+	fmt.Println(runingTotal)
+}
+
+func isNum(char byte) bool {
+	return char >= 48 && char <= 57
+}
+
+func tryFindNumber(word string) (bool, string) {
+	if num, ok := numMap[word]; ok {
+		return true, num
+	}
+	return false, ""
 }

@@ -7,7 +7,7 @@ import (
 
 var scanner *bufio.Scanner
 
-func LoadFile(path string) {
+func LoadFile(path string) []string {
 	if scanner != nil {
 		panic("File already loaded, call LoadFile() only once")
 	}
@@ -16,21 +16,14 @@ func LoadFile(path string) {
 	if err != nil {
 		panic(err)
 	}
-	defer file.Close()
 
 	scanner = bufio.NewScanner(file)
 	scanner.Scan()
-}
 
-func ReadLine() (string, error) {
-	if scanner == nil {
-		panic("No file loaded, call LoadFile() first")
+	var lines []string
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
 	}
-
-	if scanner.Scan() {
-		return scanner.Text(), nil
-	} else {
-		return "", scanner.Err()
-	}
-
+	file.Close()
+	return lines
 }
