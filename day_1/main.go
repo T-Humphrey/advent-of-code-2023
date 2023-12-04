@@ -1,4 +1,4 @@
-package week_1
+package day_1
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ var numMap = map[string]string{
 }
 
 func RunPart1() {
-	lines := base.LoadFile("week_1/input.txt")
+	lines := base.LoadFile("day_1/input.txt")
 	runingTotal := 0
 	for _, line := range lines {
 		first := ""
@@ -45,7 +45,7 @@ func RunPart1() {
 }
 
 func RunPart2() {
-	lines := base.LoadFile("week_1/input.txt")
+	lines := base.LoadFile("day_1/input.txt")
 	runingTotal := 0
 	for _, line := range lines {
 		first := ""
