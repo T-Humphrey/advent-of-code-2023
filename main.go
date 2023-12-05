@@ -6,6 +6,7 @@ import (
 	"github.com/t-humphrey/advent-of-code-2023/day_1"
 	"github.com/t-humphrey/advent-of-code-2023/day_2"
 	"github.com/t-humphrey/advent-of-code-2023/day_3"
+	"github.com/t-humphrey/advent-of-code-2023/day_4"
 )
 
 func main() {
@@ -26,6 +27,12 @@ func main() {
 	case "day3":
 		if os.Args[2] == "1" {
 			day_3.RunPart1()
+		}
+	case "day4":
+		if os.Args[2] == "1" {
+			day_4.RunPart1()
+		} else {
+			day_4.RunPart2()
 		}
 	}
 }
